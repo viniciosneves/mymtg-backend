@@ -22,8 +22,8 @@ class CreateTableCardEditions extends Migration
 
             $table->foreign('card_id')->references('id')->on('cards');
             $table->foreign('edition_id')->references('id')->on('editions');
-            $table->foreign('picture_id')->references('id')->on('pictures');
-            $table->foreign('rarety_id')->references('id')->on('rarities');
+            $table->foreign('picture_id')->references('id')->on('card_pictures');
+            $table->foreign('rarety_id')->references('id')->on('rareties');
             $table->timestamps();
         });
     }

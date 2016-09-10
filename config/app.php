@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'My Application',
+    'name' => 'My Magic the Gathering',
 
     /*
     |--------------------------------------------------------------------------
@@ -172,11 +172,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Balbi\MyMtg\Providers\AppServiceProvider::class,
+        Balbi\MyMtg\Providers\AuthServiceProvider::class,
+        // Balbi\MyMtg\Providers\BroadcastServiceProvider::class,
+        Balbi\MyMtg\Providers\EventServiceProvider::class,
+        Balbi\MyMtg\Providers\RouteServiceProvider::class,
 
     ],
 

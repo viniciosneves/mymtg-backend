@@ -15,7 +15,7 @@ class CreateTableRareties extends Migration
     {
         Schema::create('rareties', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('description')->unique();
+            $table->string('name')->unique();
             $table->integer('weight')->defaults(0)->unique();
             $table->timestamps();
         });

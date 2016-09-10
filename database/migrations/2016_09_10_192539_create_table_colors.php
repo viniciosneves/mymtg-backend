@@ -16,7 +16,7 @@ class CreateTableColors extends Migration
         Schema::create('colors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('land_name')->unique()
+            $table->string('land_name')->unique()->nullable()
                     ->comment('the name of the land associated, Forest for example.');
             $table->string('symbol_path');
             $table->timestamps();
