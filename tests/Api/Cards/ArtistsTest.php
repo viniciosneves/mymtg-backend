@@ -50,4 +50,86 @@ class ArtistsTest extends TestCase
             ]]);
     }
 
+    /**
+    * @test
+    */
+    public function shouldNotCreateArtist()
+     {
+        
+        $response = $this->json('POST',$this->resourceRoute)
+            ->assertResponseStatus(400);
+
+        $convertedContent = json_decode($response->response->getContent(),true);
+
+        $errors  = $convertedContent['errors'];
+        
+        $this->assertArrayHasKey('name',$errors['detail']);
+        $this->assertArrayHasKey('Required',$errors['detail']['name']);
+    }
+
+
+    /**
+    * @test
+    */
+    public function shouldNotUpdateArtist()
+     {
+        $id = $this->artistCreated->id;
+
+        $response = $this->json('PUT',$this->resourceRoute.'/'.$id)
+            ->assertResponseStatus(400);
+
+        $convertedContent = json_decode($response->response->getContent(),true);
+
+        $errors  = $convertedContent['errors'];
+        
+        $this->assertArrayHasKey('name',$errors['detail']);
+        $this->assertArrayHasKey('Required',$errors['detail']['name']);
+
+    }
+
+     /**
+    * @test
+    */
+    public function shouldUpdateArtist()
+     {
+        $id = $this->artistCreated->id;
+
+        $response = $this->json('PUT',$this->resourceRoute.'/'.$id,['name' => 'John doe'])
+            ->assertResponseOk();
+
+        $this->assertEquals('John doe',$this->artistCreated->fresh()->name);
+        
+    }
+
+    /**
+    * @test
+    */
+    public function shouldCreateArtist()
+     {
+        $response = $this->json('POST',$this->resourceRoute,['name' => 'John doe'])
+            ->assertResponseOk();
+
+        $converted = json_decode(($response->response->getContent()), true);
+
+        $this->assertEquals('John doe',$converted['data']['name']);
+        
+    }
+
+
+    /**
+    * @test
+    */
+    public function shouldDeleteArtist()
+     {
+        $id = $this->artistCreated->id;
+
+        $response = $this->json('DELETE',$this->resourceRoute.'/'.$id)
+            ->assertResponseOk();
+
+        $converted = json_decode(($response->response->getContent()), true);
+
+        $this->assertTrue($converted['data']);
+        
+    }
+
 }

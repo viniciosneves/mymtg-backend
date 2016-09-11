@@ -4,7 +4,8 @@ namespace Balbi\MyMtg\Http\Controllers\Cards;
 
 use Illuminate\Http\Request;
 
-use Balbi\MyMtg\Http\Requests;
+use Balbi\MyMtg\Http\Requests\Cards\Artist\StoreArtistRequest;
+use Balbi\MyMtg\Http\Requests\Cards\Artist\UpdateArtistRequest;
 use Balbi\MyMtg\Http\Controllers\Controller;
 use Balbi\MyMtg\Models\Cards\Artist;
 
@@ -32,9 +33,9 @@ class ArtistsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArtistRequest $request)
     {
-        //
+        return $this->message($this->artist->create($request->all()));
     }
 
     /**
@@ -55,9 +56,9 @@ class ArtistsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateArtistRequest $request, Artist $artist)
     {
-        //
+        return $this->message($artist->update($request->all()));
     }
 
     /**
@@ -66,8 +67,8 @@ class ArtistsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Artist $artist)
     {
-        //
+       return $this->message($artist->delete());
     }
 }

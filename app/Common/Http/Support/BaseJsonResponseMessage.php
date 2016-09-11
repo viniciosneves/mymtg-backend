@@ -16,7 +16,7 @@ class BaseJsonResponseMessage implements Jsonable, JsonSerializable
 {
 
     protected $data;
-    protected $erros;
+    protected $errors;
 
     public function __construct($data = [])
     {
@@ -25,11 +25,11 @@ class BaseJsonResponseMessage implements Jsonable, JsonSerializable
 
     public function setData($data)
     { 
-
-        if($data instanceof Arrayable)
-            $this->data = $data->toArray();
-        else if(is_array($data))
-            $this->data = $data;
+        $this->data = $data;
+        // if($data instanceof Arrayable)
+        //     $this->data = $data->toArray();
+        // else if(is_array($data))
+        //     $this->data = $data;
     }
 
     public function getData()
@@ -37,14 +37,14 @@ class BaseJsonResponseMessage implements Jsonable, JsonSerializable
         return $this->data;
     }
 
-    public function setErrors($erros)
+    public function setErrors($errors)
     {
-        $this->erros = $erros;
+        $this->errors = $errors;
     }
 
     public function getErrors()
     {
-        return $this->erros;
+        return $this->errors;
     }
 
     public function jsonSerialize()
@@ -65,8 +65,8 @@ class BaseJsonResponseMessage implements Jsonable, JsonSerializable
             $responseObject->data = $this->data;
         }
 
-        if (!empty($this->erros)) {
-            $responseObject->errors = $this->erros;
+        if (!empty($this->errors)) {
+            $responseObject->errors = $this->errors;
         }
 
         if(empty($this->data) && empty($this->errors)) {
@@ -82,7 +82,7 @@ class BaseJsonResponseMessage implements Jsonable, JsonSerializable
     {
 
         if (isset($responseObject->data) && isset($responseObject->errors)) {
-            throw new \Exception("Data and Erros should not be sent together");
+            throw new \Exception("Data and Errors should not be sent together");
         }
     }
 }

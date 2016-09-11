@@ -5,6 +5,7 @@ namespace Balbi\MyMtg\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Balbi\MyMtg\Common\Http\Support\BaseJsonResponseMessage;
 
 class Handler extends ExceptionHandler
 {
@@ -44,6 +45,32 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        $refException = new \ReflectionClass($exception);
+        if($request->expectsJson()){
+            $statusCode = 500;
+
+            $errors = [
+                'title'=>  $exception->getMessage(),
+                'exception_name' => $refException->getShortName()
+            ];
+
+            if(!empty($exception->getCode())) {
+                $errors['code'] = $exception->getCode();
+            }
+
+            $baseResponseMessage = new BaseJsonResponseMessage();
+
+            if($this->isHttpException($exception)) {
+               $statusCode = $exception->getStatusCode();
+               $errors['detail'] = $exception->getHeaders();
+            }
+
+            $baseResponseMessage->setErrors($errors);
+
+            return response()->json($baseResponseMessage,$statusCode);
+
+        }
+
         return parent::render($request, $exception);
     }
 
