@@ -26,7 +26,7 @@ class TypesTest extends TestCase
     /**
     * @test
     */
-    public function shouldReturnOneTypeWithCorrectStructure()
+    public function shouldReturnOneWithCorrectStructure()
     {
         $id = mt_rand(1,$this->maxTypes);
 

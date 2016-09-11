@@ -25,6 +25,7 @@ class BaseJsonResponseMessage implements Jsonable, JsonSerializable
 
     public function setData($data)
     { 
+
         if($data instanceof Arrayable)
             $this->data = $data->toArray();
         else if(is_array($data))
@@ -66,6 +67,10 @@ class BaseJsonResponseMessage implements Jsonable, JsonSerializable
 
         if (!empty($this->erros)) {
             $responseObject->errors = $this->erros;
+        }
+
+        if(empty($this->data) && empty($this->errors)) {
+            $responseObject->data = [];
         }
 
         $this->validateResponse($responseObject);

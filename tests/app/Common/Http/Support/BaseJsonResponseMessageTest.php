@@ -32,4 +32,17 @@ class BaseJsonResponseMessageTest extends TestCase
 
         $this->assertArrayHasKey('data',$convertedResponse);
     }
+
+     /**
+    * @test
+    */
+    public function shouldReturnAEmptyDataArray()
+    {
+        $b = new BaseJsonResponseMessage();
+
+        $jsonResponse = $b->toJson();
+        $convertedResponse = json_decode($jsonResponse,true);
+
+        $this->assertTrue(count($convertedResponse['data']) === 0);
+    }
 }

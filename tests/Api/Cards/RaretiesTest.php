@@ -4,39 +4,38 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ColorsTest extends TestCase
+class RaretiesTest extends TestCase
 {
 
-    protected $maxColors = 6;
+    protected $maxRareties = 5;
 
-    protected $resourceRoute = "api/color";
+    protected $resourceRoute = "api/rarety";
 
     /**
     * @test   
     */
-    public function shouldReturnColors()
+    public function shouldReturnRareties()
     {
         $result = $this->json('GET',$this->resourceRoute)->assertResponseOK();
         $decodedResponse = json_decode($result->response->getContent(),true);
 
-        //asserting that there is only 6 colors of cards
-        $this->assertEquals(count($decodedResponse['data']),$this->maxColors);
+        //asserting that there is only 5 Rareties of cards
+        $this->assertEquals(count($decodedResponse['data']),$this->maxRareties);
     }
 
     /**
     * @test
     */
-    public function shouldReturnOneWithCorrectStructure()
+    public function shouldReturnTypeWithCorrectStructure()
     {
-        $id = mt_rand(1,$this->maxColors);
+        $id = mt_rand(1,$this->maxRareties);
 
         $this->json('GET',$this->resourceRoute.'/'.$id)
             ->assertResponseOK()
             ->seeJsonStructure([ 'data' => [
                     'created_at',
-                    'symbol_path',
                     'name',
-                    'land_name',
+                    'weight',
                     'id' 
             ]]);
     }
@@ -45,7 +44,7 @@ class ColorsTest extends TestCase
     /**
     * @test
     */
-    public function shouldNotEditColor()
+    public function shouldNotEditType()
     {
         $this->json('POST',$this->resourceRoute,['name' => 'shouldNotWork', 'permanent' => false ])
             ->assertResponseStatus(405);
