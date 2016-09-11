@@ -17,9 +17,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::group([ 'prefix' => 'card' ],function(){
 
-    Route::resource('/type','Cards\TypesController',['only' => ['index','show']]);
-    
-});
+Route::resource('/type','Cards\TypesController',['only' => ['index','show']]);
+Route::resource('/color','Cards\ColorsController',['only' => ['index','show']]);
 

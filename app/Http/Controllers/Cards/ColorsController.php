@@ -6,16 +6,16 @@ use Illuminate\Http\Request;
 
 use Balbi\MyMtg\Http\Requests;
 use Balbi\MyMtg\Http\Controllers\Controller;
-use \Balbi\MyMtg\Models\Cards\Type;
+use \Balbi\MyMtg\Models\Cards\Color;
 
-class TypesController extends Controller
+class ColorsController extends Controller
 {
 
-    protected $type;
+    protected $color;
 
-    public function __construct(Type $type)
+    public function __construct(Color $color)
     {
-        $this->type = $type;
+        $this->color = $color;
     }
 
 
@@ -26,7 +26,7 @@ class TypesController extends Controller
      */
     public function index()
     {
-        return $this->message($this->type->all());
+        return $this->message($this->color->all());
     }
     
     /**
@@ -35,8 +35,8 @@ class TypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Color $color)
     {
-        return $this->message($this->type->find($id));
+        return $this->message($color);
     }
 }

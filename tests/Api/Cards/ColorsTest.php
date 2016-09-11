@@ -4,29 +4,23 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class TypesTest extends TestCase
+class ColorsTest extends TestCase
 {
 
-    protected $maxTypes = 8;
+    protected $maxColors = 6;
 
-    protected $resourceRoute = "api/card/type";
+    protected $resourceRoute = "api/color";
 
-    protected $jsonStructure = [
-            'created_at',
-            'name',
-            'permanent',
-            'id'
-        ];
     /**
     * @test   
     */
-    public function shouldReturnTypesWithCorrectStructure()
+    public function shouldReturnColors()
     {
-        $result = $this->json('GET',$this->resourceRoute)->assertResponseOK()
-        ->seeJsonStructure([$this->jsonStructure]);
+        $result = $this->json('GET',$this->resourceRoute)->assertResponseOK();
+        $decodedResponse = json_decode($result->response->getContent(),true);
 
-        //asserting that there is only 8 types of cards
-        $this->assertEquals($result->response->original->count(),$this->maxTypes);
+        //asserting that there is only 6 colors of cards
+        $this->assertEquals(count($decodedResponse['data']),$this->maxColors);
     }
 
     /**
@@ -34,18 +28,24 @@ class TypesTest extends TestCase
     */
     public function shouldReturnOneTypeWithCorrectStructure()
     {
-        $id = mt_rand(1,$this->maxTypes);
+        $id = mt_rand(1,$this->maxColors);
 
         $this->json('GET',$this->resourceRoute.'/'.$id)
             ->assertResponseOK()
-            ->seeJsonStructure($this->jsonStructure);
+            ->seeJsonStructure([ 'data' => [
+                    'created_at',
+                    'symbol_path',
+                    'name',
+                    'land_name',
+                    'id' 
+            ]]);
     }
 
 
     /**
     * @test
     */
-    public function shouldNotEditType()
+    public function shouldNotEditColor()
     {
         $this->json('POST',$this->resourceRoute,['name' => 'shouldNotWork', 'permanent' => false ])
             ->assertResponseStatus(405);
