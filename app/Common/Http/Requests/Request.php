@@ -12,8 +12,10 @@ class Request extends FormRequest
 
 
     protected function failedValidation(Validator $validator)
-    {
-        throw new SymfonyHttpException(400, 'Faild on Validation', null, $validator->failed());
+    {  //$statusCode, $message = null, \Exception $previous = null, array $headers = array(), $code = 0
+        $failed = $validator->errors()->toArray();
+        // dd($failed->toArray());
+        throw new SymfonyHttpException(400, 'Failed on Validation',null,$failed);
     }
 
     protected function failedAuthorization()

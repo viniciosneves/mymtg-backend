@@ -16,6 +16,7 @@ class CreateTableArtists extends Migration
         Schema::create('artists', function (Blueprint $table) {
             $table->increments('id');
             $table->string("name")->unique();
+            $table->string("phone")->default("");
             $table->timestamps();
         });
     }

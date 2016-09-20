@@ -46,7 +46,6 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         $refException = new \ReflectionClass($exception);
-        if($request->expectsJson()){
             $statusCode = 500;
 
             $errors = [
@@ -69,7 +68,6 @@ class Handler extends ExceptionHandler
 
             return response()->json($baseResponseMessage,$statusCode);
 
-        }
 
         return parent::render($request, $exception);
     }

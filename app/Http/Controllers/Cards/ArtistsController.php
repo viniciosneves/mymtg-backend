@@ -58,7 +58,8 @@ class ArtistsController extends Controller
      */
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
-        return $this->message($artist->update($request->all()));
+        $artist->update($request->all());
+        return $this->message($artist);
     }
 
     /**
