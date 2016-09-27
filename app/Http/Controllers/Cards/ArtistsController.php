@@ -24,7 +24,8 @@ class ArtistsController extends Controller
      */
     public function index(IndexRequest $request)
     {
-        return $this->message($this->artist->paginate($request->perPage()));
+        return $this->message($this->artist->where('name','like','%'.$request->get('query','').'%')
+                                    ->paginate($request->perPage()));
     }
 
     /**
