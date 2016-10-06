@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
          $this->call(ColorsSeed::class);
          $this->call(TypesSeed::class);
          $this->call(RaretiesSeed::class);
+         $this->call(BlocksSeed::class);
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
