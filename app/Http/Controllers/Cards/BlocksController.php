@@ -25,8 +25,12 @@ class BlocksController extends Controller
      */
     public function index(IndexRequest $request)
     {
-        return $this->message($this->block->where('name','like','%'.$request->get('name','').'%')
-                                    ->paginate($request->perPage()));
+        if($request->paginate()) {
+            return $this->message($this->block->where('name','like','%'.$request->get('name','').'%')
+                                        ->paginate($request->perPage()));
+        } else {
+            return $this->message($this->block->where('name','like','%'.$request->get('name','').'%')->get());
+        }
     }
 
     /**

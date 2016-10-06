@@ -15,4 +15,8 @@ class IndexRequest extends Request {
 	public function perPage() {
 		return $this->get('per_page', 15);
 	}
+    
+    public function paginate() {
+        return $this->has('paginate');
+    }
 }
