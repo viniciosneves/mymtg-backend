@@ -3,7 +3,7 @@
 namespace Balbi\MyMtg\Http\Controllers\Cards;
 
 use Illuminate\Http\Request;
-
+use Balbi\MyMtg\Common\Http\Requests\IndexRequest;
 use Balbi\MyMtg\Http\Requests\Cards\Artist\StoreArtistRequest;
 use Balbi\MyMtg\Http\Requests\Cards\Artist\UpdateArtistRequest;
 use Balbi\MyMtg\Http\Controllers\Controller;
@@ -22,9 +22,14 @@ class ArtistsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexRequest $request)
     {
-        return $this->message($this->artist->all());
+        if($request->paginate()) {
+            return $this->message($this->artist->where('name','like','%'.$request->get('name','').'%')
+                                        ->paginate($request->perPage()));
+        } else {
+            return $this->message($this->artist->where('name','like','%'.$request->get('name','').'%')->get());
+        }
     }
 
     /**

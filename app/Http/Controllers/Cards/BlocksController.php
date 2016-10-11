@@ -8,6 +8,7 @@ use Balbi\MyMtg\Http\Requests\Cards\Block\StoreBlockRequest;
 use Balbi\MyMtg\Http\Requests\Cards\Block\UpdateBlockRequest;
 use Balbi\MyMtg\Http\Controllers\Controller;
 use Balbi\MyMtg\Models\Cards\Block;
+use Balbi\MyMtg\Common\Http\Requests\IndexRequest;
 
 class BlocksController extends Controller
 {
@@ -22,9 +23,14 @@ class BlocksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexRequest $request)
     {
-        return $this->message($this->block->all());
+        if($request->paginate()) {
+            return $this->message($this->block->where('name','like','%'.$request->get('name','').'%')
+                                        ->paginate($request->perPage()));
+        } else {
+            return $this->message($this->block->where('name','like','%'.$request->get('name','').'%')->get());
+        }
     }
 
     /**

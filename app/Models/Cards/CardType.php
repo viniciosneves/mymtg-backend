@@ -2,7 +2,7 @@
 
 namespace Balbi\MyMtg\Models\Cards;
 
-use Illuminate\Database\Eloquent\Model;
+use Balbi\MyMtg\Common\Model\EloquentModel as Model;
 
 class CardType extends Model
 {

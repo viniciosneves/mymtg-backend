@@ -23,4 +23,5 @@ Route::resource('/color','Cards\ColorsController',['only' => ['index','show']]);
 Route::resource('/rarety','Cards\RaretiesController',['only' => ['index','show']]);
 Route::resource('/artist','Cards\ArtistsController');
 Route::resource('/block','Cards\BlocksController');
+Route::resource('/edition','Cards\EditionsController');
 
